@@ -10,7 +10,7 @@
 
 using namespace ArduinoJson::Polyfills;
 
-TEST_CASE("isInteger() returns true when input is an integer") {
+TEST_CASE("isInteger()") {
   SECTION("Null") {
     REQUIRE_FALSE(isInteger(NULL));
   }

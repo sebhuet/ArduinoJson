@@ -9,7 +9,7 @@ add_executable(PolyfillsTests
 	isFloat.cpp
 	isInteger.cpp
 	parseFloat.cpp
-	# parseInteger.cpp
+	parseInteger.cpp
 )
 
 target_link_libraries(PolyfillsTests catch)

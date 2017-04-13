@@ -10,7 +10,7 @@
 
 using namespace ArduinoJson::Polyfills;
 
-TEST_CASE("isFloat() returns true if input is a float") {
+TEST_CASE("isFloat()") {
   SECTION("Input is NULL") {
     REQUIRE(isFloat(NULL) == false);
   }
