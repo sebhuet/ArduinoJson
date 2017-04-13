@@ -6,47 +6,23 @@
 // If you like this project, please add a star!
 
 #include <ArduinoJson.h>
-#include <gtest/gtest.h>
+#include <catch.hpp>
 
-class IntegrationTests : public testing::TestWithParam<const char*> {
-  static const size_t MAX_JSON_SIZE = 10000;
+void check(std::string originalJson) {
+  DynamicJsonBuffer jb;
 
- protected:
-  virtual void SetUp() {
-    _input = GetParam();
-    strcpy(_inputBuffer, _input);
-  }
+  std::string prettyJson;
+  jb.parseObject(originalJson).prettyPrintTo(prettyJson);
 
-  void parseThenPrint(char* input, char* output) {
-    DynamicJsonBuffer buffer;
-    buffer.parseObject(input).printTo(output, MAX_JSON_SIZE);
-  }
+  std::string finalJson;
+  jb.parseObject(prettyJson).printTo(finalJson);
 
-  void parseThenPrettyPrint(char* input, char* output) {
-    DynamicJsonBuffer buffer;
-    buffer.parseObject(input).prettyPrintTo(output, MAX_JSON_SIZE);
-  }
-
-  const char* _input;
-  char _inputBuffer[MAX_JSON_SIZE];
-  char _outputBuffer[MAX_JSON_SIZE];
-  char _intermediateBuffer[MAX_JSON_SIZE];
-};
-
-TEST_P(IntegrationTests, ParseThenPrint) {
-  parseThenPrint(_inputBuffer, _outputBuffer);
-  ASSERT_STREQ(_input, _outputBuffer);
+  REQUIRE(originalJson == finalJson);
 }
 
-TEST_P(IntegrationTests, ParseThenPrettyPrintThenParseThenPrint) {
-  parseThenPrettyPrint(_inputBuffer, _intermediateBuffer);
-  parseThenPrint(_intermediateBuffer, _outputBuffer);
-  ASSERT_STREQ(_input, _outputBuffer);
-}
-
-INSTANTIATE_TEST_CASE_P(
-    OpenWeatherMap, IntegrationTests,
-    testing::Values(
+TEST_CASE("Round Trip") {
+  SECTION("OpenWeatherMap") {
+    check(
         "{\"coord\":{\"lon\":145.77,\"lat\":-16.92},\"sys\":{\"type\":1,\"id\":"
         "8166,\"message\":0.1222,\"country\":\"AU\",\"sunrise\":1414784325,"
         "\"sunset\":1414830137},\"weather\":[{\"id\":801,\"main\":\"Clouds\","
@@ -54,11 +30,11 @@ INSTANTIATE_TEST_CASE_P(
         "stations\",\"main\":{\"temp\":296.15,\"pressure\":1014,\"humidity\":"
         "83,\"temp_min\":296.15,\"temp_max\":296.15},\"wind\":{\"speed\":2.22,"
         "\"deg\":114.501},\"clouds\":{\"all\":20},\"dt\":1414846800,\"id\":"
-        "2172797,\"name\":\"Cairns\",\"cod\":200}"));
+        "2172797,\"name\":\"Cairns\",\"cod\":200}");
+  }
 
-INSTANTIATE_TEST_CASE_P(
-    YahooQueryLanguage, IntegrationTests,
-    testing::Values(
+  SECTION("YahooQueryLanguage") {
+    check(
         "{\"query\":{\"count\":40,\"created\":\"2014-11-01T14:16:49Z\","
         "\"lang\":\"fr-FR\",\"results\":{\"item\":[{\"title\":\"Burkina army "
         "backs Zida as interim leader\"},{\"title\":\"British jets intercept "
@@ -102,4 +78,6 @@ INSTANTIATE_TEST_CASE_P(
         "release of Marine veteran\"},{\"title\":\"As election closes in, "
         "Obama on center stage\"},{\"title\":\"Body of Zambian president "
         "arrives home\"},{\"title\":\"South Africa arrests 2 Vietnamese for "
-        "poaching\"}]}}}"));
+        "poaching\"}]}}}");
+  }
+}
