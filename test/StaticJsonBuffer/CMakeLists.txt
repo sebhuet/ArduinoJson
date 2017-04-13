@@ -11,7 +11,7 @@ add_executable(StaticJsonBufferTests
 	createObject.cpp
 	parseArray.cpp
 	parseObject.cpp
-#	string.cpp
+	startString.cpp
 )
 
 target_link_libraries(StaticJsonBufferTests catch)
