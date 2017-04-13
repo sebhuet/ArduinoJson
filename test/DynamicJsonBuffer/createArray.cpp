@@ -23,7 +23,7 @@ TEST_CASE("DynamicJsonBuffer::createArray()") {
   }
 
   SECTION("CanAdd1000Values") {
-    for (int i = 1; i <= 1000; i++) {
+    for (size_t i = 1; i <= 1000; i++) {
       array.add("hello");
       REQUIRE(array.size() == i);
     }

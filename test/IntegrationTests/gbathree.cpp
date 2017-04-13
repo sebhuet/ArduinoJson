@@ -9,7 +9,6 @@
 #include <catch.hpp>
 
 TEST_CASE("Gbathree") {
-  char _json[1024];
   DynamicJsonBuffer _buffer;
 
   const JsonObject& _object = _buffer.parseObject(
