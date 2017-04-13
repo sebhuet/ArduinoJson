@@ -14,7 +14,7 @@ add_executable(JsonArrayTests
 	iterator.cpp
 	prettyPrintTo.cpp
 	printTo.cpp
-#	remove.cpp
+	remove.cpp
 #	set.cpp
 #	subscript.cpp
 )

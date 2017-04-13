@@ -6,72 +6,68 @@
 // If you like this project, please add a star!
 
 #include <ArduinoJson.h>
-#include <gtest/gtest.h>
+#include <catch.hpp>
 
-class JsonArray_Remove_Tests : public ::testing::Test {
- protected:
-  JsonArray_Remove_Tests() : _array(_jsonBuffer.createArray()) {
-    _array.add("one");
-    _array.add("two");
-    _array.add("three");
+using namespace Catch::Matchers;
+
+TEST_CASE("JsonArray::remove()") {
+  DynamicJsonBuffer _jsonBuffer;
+  JsonArray& _array = _jsonBuffer.createArray();
+  _array.add("one");
+  _array.add("two");
+  _array.add("three");
+
+  SECTION("RemoveFirstByIndex") {
+    _array.remove(0);
+
+    REQUIRE(2 == _array.size());
+    REQUIRE_THAT(_array[0], Equals("two"));
+    REQUIRE_THAT(_array[1], Equals("three"));
   }
 
-  DynamicJsonBuffer _jsonBuffer;
-  JsonArray& _array;
-};
+  SECTION("RemoveMiddleByIndex") {
+    _array.remove(1);
 
-#define TEST_(name) TEST_F(JsonArray_Remove_Tests, name)
+    REQUIRE(2 == _array.size());
+    REQUIRE_THAT(_array[0], Equals("one"));
+    REQUIRE_THAT(_array[1], Equals("three"));
+  }
 
-TEST_(RemoveFirstByIndex) {
-  _array.remove(0);
+  SECTION("RemoveLastByIndex") {
+    _array.remove(2);
 
-  EXPECT_EQ(2, _array.size());
-  EXPECT_STREQ("two", _array[0]);
-  EXPECT_STREQ("three", _array[1]);
-}
+    REQUIRE(2 == _array.size());
+    REQUIRE_THAT(_array[0], Equals("one"));
+    REQUIRE_THAT(_array[1], Equals("two"));
+  }
 
-TEST_(RemoveMiddleByIndex) {
-  _array.remove(1);
+  SECTION("RemoveFirstByIterator") {
+    JsonArray::iterator it = _array.begin();
+    _array.remove(it);
 
-  EXPECT_EQ(2, _array.size());
-  EXPECT_STREQ("one", _array[0]);
-  EXPECT_STREQ("three", _array[1]);
-}
+    REQUIRE(2 == _array.size());
+    REQUIRE_THAT(_array[0], Equals("two"));
+    REQUIRE_THAT(_array[1], Equals("three"));
+  }
 
-TEST_(RemoveLastByIndex) {
-  _array.remove(2);
+  SECTION("RemoveMiddleByIterator") {
+    JsonArray::iterator it = _array.begin();
+    ++it;
+    _array.remove(it);
 
-  EXPECT_EQ(2, _array.size());
-  EXPECT_STREQ("one", _array[0]);
-  EXPECT_STREQ("two", _array[1]);
-}
+    REQUIRE(2 == _array.size());
+    REQUIRE_THAT(_array[0], Equals("one"));
+    REQUIRE_THAT(_array[1], Equals("three"));
+  }
 
-TEST_(RemoveFirstByIterator) {
-  JsonArray::iterator it = _array.begin();
-  _array.remove(it);
+  SECTION("RemoveLastByIterator") {
+    JsonArray::iterator it = _array.begin();
+    ++it;
+    ++it;
+    _array.remove(it);
 
-  EXPECT_EQ(2, _array.size());
-  EXPECT_STREQ("two", _array[0]);
-  EXPECT_STREQ("three", _array[1]);
-}
-
-TEST_(RemoveMiddleByIterator) {
-  JsonArray::iterator it = _array.begin();
-  ++it;
-  _array.remove(it);
-
-  EXPECT_EQ(2, _array.size());
-  EXPECT_STREQ("one", _array[0]);
-  EXPECT_STREQ("three", _array[1]);
-}
-
-TEST_(RemoveLastByIterator) {
-  JsonArray::iterator it = _array.begin();
-  ++it;
-  ++it;
-  _array.remove(it);
-
-  EXPECT_EQ(2, _array.size());
-  EXPECT_STREQ("one", _array[0]);
-  EXPECT_STREQ("two", _array[1]);
+    REQUIRE(2 == _array.size());
+    REQUIRE_THAT(_array[0], Equals("one"));
+    REQUIRE_THAT(_array[1], Equals("two"));
+  }
 }
