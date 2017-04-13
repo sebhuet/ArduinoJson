@@ -23,28 +23,28 @@ TEST_CASE("DynamicJsonBuffer no memory") {
     NoMemoryAllocator().deallocate(NULL);
   }
 
-  SECTION("CreateArray") {
+  SECTION("createArray()") {
     REQUIRE_FALSE(_jsonBuffer.createArray().success());
   }
 
-  SECTION("CreateObject") {
+  SECTION("createObject()") {
     REQUIRE_FALSE(_jsonBuffer.createObject().success());
   }
 
-  SECTION("ParseArray") {
+  SECTION("parseArray()") {
     char json[] = "[]";
     REQUIRE_FALSE(_jsonBuffer.parseArray(json).success());
   }
 
-  SECTION("ParseObject") {
+  SECTION("parseObject()") {
     char json[] = "{}";
     REQUIRE_FALSE(_jsonBuffer.parseObject(json).success());
   }
 
-  SECTION("String") {
+  SECTION("startString()") {
     DynamicJsonBufferBase<NoMemoryAllocator>::String str =
         _jsonBuffer.startString();
     str.append('!');
-    REQUIRE(NULL == str.c_str());
+    REQUIRE(0 == str.c_str());
   }
 }
