@@ -6,7 +6,7 @@
 # If you like this project, please add a star!
 
 add_executable(IntegrationTests 
-	#gbathree.cpp
+	gbathree.cpp
 	round_trip.cpp
 )
 

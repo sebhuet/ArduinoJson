@@ -20,7 +20,7 @@ void check(std::string originalJson) {
   REQUIRE(originalJson == finalJson);
 }
 
-TEST_CASE("Round Trip") {
+TEST_CASE("Round Trip: parse -> prettyPrint -> parse -> print") {
   SECTION("OpenWeatherMap") {
     check(
         "{\"coord\":{\"lon\":145.77,\"lat\":-16.92},\"sys\":{\"type\":1,\"id\":"
