@@ -9,7 +9,6 @@ include(gtest.cmake)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "(GNU|Clang)")
 	add_compile_options(
-		-fno-exceptions
 		-pedantic
 		-Wall
 		-Wcast-align
