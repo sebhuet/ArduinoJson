@@ -60,8 +60,6 @@ TEST_CASE("StaticJsonBuffer::alloc()") {
   }
 
   SECTION("Alignment") {
-    size_t mask = sizeof(void *) - 1;
-
     for (size_t size = 1; size <= sizeof(void *); size++) {
       void *p = buffer.alloc(1);
       REQUIRE(isAligned(p));

@@ -21,6 +21,6 @@ TEST_CASE("DynamicJsonBuffer::strdup()") {
   SECTION("Given NULL, return NULL") {
     const char* original = NULL;
     char* copy = buffer.strdup(original);
-    REQUIRE(NULL == copy);
+    REQUIRE(0 == copy);
   }
 }
