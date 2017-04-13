@@ -8,7 +8,7 @@
 add_executable(JsonArrayTests 
 	add.cpp
 	basics.cpp
-#	copyFrom.cpp
+	copyFrom.cpp
 #	copyTo.cpp
 #	invalid.cpp
 #	iterator.cpp
