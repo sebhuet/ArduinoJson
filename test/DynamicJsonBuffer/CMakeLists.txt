@@ -11,7 +11,7 @@ add_executable(DynamicJsonBufferTests
 	no_memory.cpp
 	createObject.cpp
 	strdup.cpp
-	# string.cpp
+	startString.cpp
 )
 
 target_link_libraries(DynamicJsonBufferTests catch)
