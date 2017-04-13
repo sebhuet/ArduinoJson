@@ -6,10 +6,11 @@
 # If you like this project, please add a star!
 
 add_executable(DynamicJsonBufferTests 
+	alloc.cpp
 	array.cpp
-	basics.cpp
 	# noMemory.cpp
 	# object.cpp
+	strdup.cpp
 	# string.cpp
 )
 

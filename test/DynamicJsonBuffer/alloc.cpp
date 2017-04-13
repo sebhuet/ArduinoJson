@@ -14,7 +14,7 @@ static bool isAligned(void* ptr) {
   return (addr & mask) == 0;
 }
 
-TEST_CASE("DynamicJsonBuffer basics") {
+TEST_CASE("DynamicJsonBuffer::alloc()") {
   DynamicJsonBuffer buffer;
 
   SECTION("InitialSizeIsZero") {
@@ -41,18 +41,5 @@ TEST_CASE("DynamicJsonBuffer basics") {
     REQUIRE(isAligned(buffer.alloc(1)));  // this on is aligned by design
     REQUIRE(isAligned(buffer.alloc(1)));  // this one fits in the first block
     REQUIRE(isAligned(buffer.alloc(1)));  // this one requires a new block
-  }
-
-  SECTION("strdup") {
-    char original[] = "hello";
-    char* copy = buffer.strdup(original);
-    strcpy(original, "world");
-    REQUIRE(std::string("hello") == copy);
-  }
-
-  SECTION("strdup_givenNull") {
-    const char* original = NULL;
-    char* copy = buffer.strdup(original);
-    REQUIRE(NULL == copy);
   }
 }
