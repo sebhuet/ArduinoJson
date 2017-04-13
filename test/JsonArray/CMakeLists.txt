@@ -16,7 +16,7 @@ add_executable(JsonArrayTests
 	printTo.cpp
 	remove.cpp
 	set.cpp
-#	subscript.cpp
+	subscript.cpp
 )
 
 target_link_libraries(JsonArrayTests catch)
