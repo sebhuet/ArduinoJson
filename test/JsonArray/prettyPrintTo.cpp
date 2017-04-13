@@ -8,7 +8,7 @@
 #include <ArduinoJson.h>
 #include <catch.hpp>
 
-void check(JsonArray& array, std::string expected) {
+static void check(JsonArray& array, std::string expected) {
   std::string actual;
   size_t actualLen = array.prettyPrintTo(actual);
   size_t measuredLen = array.measurePrettyLength();
