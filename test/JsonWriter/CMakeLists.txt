@@ -7,8 +7,8 @@
 
 add_executable(JsonWriterTests 
 	writeFloat.cpp
-	writeString.cpp
+#	writeString.cpp
 )
 
-target_link_libraries(JsonWriterTests gtest)
+target_link_libraries(JsonWriterTests catch)
 add_test(JsonWriter JsonWriterTests)
