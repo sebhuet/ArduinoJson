@@ -6,28 +6,26 @@
 // If you like this project, please add a star!
 
 #include <ArduinoJson.h>
-#include <gtest/gtest.h>
+#include <catch.hpp>
 
-TEST(DynamicJsonBuffer_Array_Tests, GrowsWithArray) {
+TEST_CASE("DynamicJsonBuffer::createArray()") {
   DynamicJsonBuffer jsonBuffer;
-
-  JsonArray &array = jsonBuffer.createArray();
-  ASSERT_EQ(JSON_ARRAY_SIZE(0), jsonBuffer.size());
-
-  array.add("hello");
-  ASSERT_EQ(JSON_ARRAY_SIZE(1), jsonBuffer.size());
-
-  array.add("world");
-  ASSERT_EQ(JSON_ARRAY_SIZE(2), jsonBuffer.size());
-}
-
-TEST(DynamicJsonBuffer_Array_Tests, CanAdd1000Values) {
-  DynamicJsonBuffer jsonBuffer;
-
   JsonArray &array = jsonBuffer.createArray();
 
-  for (int i = 1; i <= 1000; i++) {
+  SECTION("GrowsWithArray") {
+    REQUIRE(JSON_ARRAY_SIZE(0) == jsonBuffer.size());
+
     array.add("hello");
-    ASSERT_EQ(array.size(), i);
+    REQUIRE(JSON_ARRAY_SIZE(1) == jsonBuffer.size());
+
+    array.add("world");
+    REQUIRE(JSON_ARRAY_SIZE(2) == jsonBuffer.size());
+  }
+
+  SECTION("CanAdd1000Values") {
+    for (int i = 1; i <= 1000; i++) {
+      array.add("hello");
+      REQUIRE(array.size() == i);
+    }
   }
 }

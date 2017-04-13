@@ -7,11 +7,11 @@
 
 add_executable(DynamicJsonBufferTests 
 	array.cpp
-	basics.cpp
-	noMemory.cpp
-	object.cpp
-	string.cpp
+	# basics.cpp
+	# noMemory.cpp
+	# object.cpp
+	# string.cpp
 )
 
-target_link_libraries(DynamicJsonBufferTests gtest)
+target_link_libraries(DynamicJsonBufferTests catch)
 add_test(DynamicJsonBuffer DynamicJsonBufferTests)
